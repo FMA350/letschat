@@ -1,116 +1,93 @@
-//
-//  ViewController.swift
-//  Flash Chat
-//
-//  Created by Angela Yu on 29/08/2015.
-//  Copyright (c) 2015 London App Brewery. All rights reserved.
-//
-
 import UIKit
+import Firebase
+import ChameleonFramework
 
-
-class ChatViewController: UIViewController {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    // Declare instance variables here
 
-    
-    // We've pre-linked the IBOutlets
-    @IBOutlet var heightConstraint: NSLayoutConstraint!
-    @IBOutlet var sendButton: UIButton!
-    @IBOutlet var messageTextfield: UITextField!
+    var friends : [UserNode] = [UserNode]()
+    var selectedFriend : Int = -1
+
     @IBOutlet var messageTableView: UITableView!
     
     
+    @IBAction func backButton(_ sender: Any) {
+        do{
+            try authToken.signOut()
+            self.navigationController?.popViewController(animated: true)
+        }
+        catch{
+            print("error signing out")
+        }
+    }
     
-    override func viewDidLoad() {
+    override func viewDidAppear(_ animated: Bool) {
+        
+        retrieveChats()
+    }
+    
+    override func viewDidLoad(){
         super.viewDidLoad()
         
-        //TODO: Set yourself as the delegate and datasource here:
-        
-        
-        
-        //TODO: Set yourself as the delegate of the text field here:
-
-        
-        
-        //TODO: Set the tapGesture here:
-        
-        
-
-        //TODO: Register your MessageCell.xib file here:
-
-        
+        messageTableView.dataSource = self
+        messageTableView.delegate   = self
+        messageTableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "customMessageCell")
+        configureTableView()
+        messageTableView.separatorStyle = .none
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return friends.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = messageTableView.dequeueReusableCell(withIdentifier: "customMessageCell", for: indexPath) as! CustomMessageCell
+        cell.senderUsername.text = friends[indexPath.row].email
+        cell.messageBody.text = friends[indexPath.row].email //TODO: Change to the last sent text
+        cell.avatarImageView.image = UIImage(named: "egg")
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //add the user to the list of friends
+        selectedFriend = indexPath.row
+        performSegue(withIdentifier: "goToMessageView", sender: self)
+    }
+    
+    func configureTableView(){
+        messageTableView.rowHeight = UITableView.automaticDimension
+        messageTableView.estimatedRowHeight = 120.0
+    }
+    
+    
+    func retrieveChats(){
+        friends.removeAll()
+        loadFriendsString(){
+            (data) in
+            uidstrToNode(uidstr: data){
+                (tmpNode) in
+                var node = UserNode(email: tmpNode.email, uid: tmpNode.uid, relation: .friend)
+                node.relation = .friend
+                self.friends.append(node)
+                //disable the relative user row.
+                self.messageTableView.reloadData()
+            }
+        }
     }
 
-    ///////////////////////////////////////////
+    @IBAction func showFriends(_ sender: Any) {
+        self.performSegue(withIdentifier: "goToFriendsView", sender: self)
+    }
     
-    //MARK: - TableView DataSource Methods
-    
-    
-    
-    //TODO: Declare cellForRowAtIndexPath here:
-    
-    
-    
-    //TODO: Declare numberOfRowsInSection here:
-    
-    
-    
-    //TODO: Declare tableViewTapped here:
-    
-    
-    
-    //TODO: Declare configureTableView here:
-    
-    
-    
-    ///////////////////////////////////////////
-    
-    //MARK:- TextField Delegate Methods
-    
-    
-
-    
-    //TODO: Declare textFieldDidBeginEditing here:
-    
-    
-    
-    
-    //TODO: Declare textFieldDidEndEditing here:
-    
-
-    
-    ///////////////////////////////////////////
-    
-    
-    //MARK: - Send & Recieve from Firebase
-    
-    
-    
-    
-    
-    @IBAction func sendPressed(_ sender: AnyObject) {
-        
-        
-        //TODO: Send the message to Firebase and save it in our database
-        
+    override func prepare(for segue: UIStoryboardSegue, sender: (Any)?) {
+        if segue.identifier == "goToMessageView"  {
+            let vc : MessageViewController = segue.destination as! MessageViewController
+            vc.setFriendData(friend: friends[selectedFriend])
+        }
+            
         
     }
     
-    //TODO: Create the retrieveMessages method here:
-    
-    
-
-    
-    
-    
-    @IBAction func logOutPressed(_ sender: AnyObject) {
-        
-        //TODO: Log out the user and send them back to WelcomeViewController
-        
-        
-    }
-    
-
-
+//end of class
 }
+

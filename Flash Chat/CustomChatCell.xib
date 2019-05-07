@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="customChatCell" selectionStyle="default" indentationWidth="10" rowHeight="75" id="KGk-i7-Jjw" customClass="CustomChatCell" customModule="Flash_Chat" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="484" height="75"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="484" height="74.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="3V5-or-8se">
+                        <rect key="frame" x="74.5" y="8" width="399.5" height="58.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kGk-ee-pjZ" userLabel="userChatName">
+                                <rect key="frame" x="0.0" y="0.0" width="44" height="19"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iza-P9-uuE" userLabel="LastMessage">
+                                <rect key="frame" x="0.0" y="46" width="35.5" height="12.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qzV-Ey-c42" userLabel="chatImage">
+                        <rect key="frame" x="0.0" y="0.0" width="74.5" height="74.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="qzV-Ey-c42" secondAttribute="height" multiplier="1:1" id="pUZ-D6-9il"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" red="0.8862745098" green="0.53725490200000003" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                <constraints>
+                    <constraint firstItem="3V5-or-8se" firstAttribute="leading" secondItem="qzV-Ey-c42" secondAttribute="trailing" id="14U-V2-jNn"/>
+                    <constraint firstItem="qzV-Ey-c42" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="2Zs-Qd-kqF"/>
+                    <constraint firstItem="qzV-Ey-c42" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="GxN-KT-1IA"/>
+                    <constraint firstAttribute="bottom" secondItem="3V5-or-8se" secondAttribute="bottom" constant="8" id="ObF-d8-d4x"/>
+                    <constraint firstAttribute="trailing" secondItem="3V5-or-8se" secondAttribute="trailing" constant="10" id="aAC-Vs-SRH"/>
+                    <constraint firstItem="3V5-or-8se" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="rQg-41-kQ7"/>
+                    <constraint firstAttribute="bottom" secondItem="qzV-Ey-c42" secondAttribute="bottom" id="ugD-g0-JaW"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="chatLastMessage" destination="Iza-P9-uuE" id="KDk-Po-Cr7"/>
+                <outlet property="chatUserName" destination="kGk-ee-pjZ" id="tl2-1r-W37"/>
+                <outlet property="image" destination="qzV-Ey-c42" id="ZG8-LM-RyU"/>
+            </connections>
+            <point key="canvasLocation" x="166.66666666666669" y="63.950892857142854"/>
+        </tableViewCell>
+    </objects>
+</document>
